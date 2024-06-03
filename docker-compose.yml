@@ -1,0 +1,55 @@
+version: '3.9'
+networks:
+  postgres:
+    driver: bridge
+    ipam:
+      config:
+        - subnet: 172.5.0.0/16
+
+volumes:
+  pgadmin:
+  user:
+
+
+services:
+  postgresuser:
+    container_name: postgres_user_container
+    image: postgres
+    restart: always
+    # set shared memory limit when using docker-compose
+    shm_size: 128mb
+    volumes:
+      - ./data/user:/var/lib/postgresql/data
+    ports:
+      - "5432:5432"
+    networks:
+      - postgres
+  
+    # or set shared memory limit when deploy via swarm stack
+    #volumes:
+    #  - type: tmpfs
+    #    target: /dev/shm
+    #    tmpfs:
+    #      size: 134217728 # 128*2^20 bytes = 128Mb
+    environment:
+      POSTGRES_PASSWORD: "admin1234"
+      POSTGRES_DB: "UserDB"
+      POSTGRES_USER: "admin"
+
+  
+
+  pgadmin:
+    container_name: pgadmin_container
+    image: dpage/pgadmin4
+    restart: unless-stopped
+    ports:
+      - 8080:80
+    networks:
+      - postgres
+    volumes:
+      - ./data/pgadmin:/var/lib/pgadmin
+    environment:
+      PGADMIN_CONFIG_SERVER_MODE: "False"
+      PGADMIN_DEFAULT_EMAIL: "admin@mail.ru"
+      PGADMIN_DEFAULT_PASSWORD: "admin1234"
+  
