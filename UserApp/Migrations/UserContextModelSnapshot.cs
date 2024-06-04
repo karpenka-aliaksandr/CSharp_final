@@ -47,11 +47,11 @@ namespace UserApp.Migrations
                         new
                         {
                             RoleId = 1,
-                            Name = "User"
+                            Name = "MailRoleDTO"
                         });
                 });
 
-            modelBuilder.Entity("UserApp.Model.User", b =>
+            modelBuilder.Entity("UserApp.Model.MailRoleDTO", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -86,7 +86,7 @@ namespace UserApp.Migrations
                     b.ToTable("users", (string)null);
                 });
 
-            modelBuilder.Entity("UserApp.Model.User", b =>
+            modelBuilder.Entity("UserApp.Model.MailRoleDTO", b =>
                 {
                     b.HasOne("UserApp.Model.Role", "Role")
                         .WithMany("Users")

@@ -21,7 +21,7 @@ namespace UserApp.Controllers
 
         [HttpGet]
         [Route("Users")]
-        [Authorize(Roles = "Admin, User")]
+        [Authorize(Roles = "Admin, MailRoleDTO")]
         public IActionResult UserEndPoint()
         {
             var currentUser = GetCurrentUser();

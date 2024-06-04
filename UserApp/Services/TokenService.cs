@@ -10,15 +10,15 @@ namespace UserApp.Services
 {
     public class TokenService(JwtConfiguration jwt):ITokenService
     {
-        public string GenerateToken(LoginViewModel loginViewModel)
+        public string GenerateToken(MailRoleDTO mailRoleDTO)
         {
             var securityKey = new RsaSecurityKey(RSATools.GetPrivateKey());
             var credentilas = new SigningCredentials(securityKey, SecurityAlgorithms.RsaSha256Signature);
 
             var claims = new[]
             {
-                new Claim(ClaimTypes.Email, loginViewModel.Email),
-                new Claim(ClaimTypes.Role, loginViewModel.UserRole.ToString())
+                new Claim(ClaimTypes.Email, mailRoleDTO.Email),
+                new Claim(ClaimTypes.Role, mailRoleDTO.Role.ToString())
             };
             var token = new JwtSecurityToken
             (

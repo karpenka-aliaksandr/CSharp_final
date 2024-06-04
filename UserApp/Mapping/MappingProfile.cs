@@ -16,6 +16,15 @@ namespace UserApp.Mapping
 
             CreateMap<RoleId, RoleType>()
                 .ConvertUsing(src => ConvertRoleIdToRoleType(src));
+           
+
+            CreateMap<User, MailRoleDTO>()
+                .ForMember(dest => dest.Email, opts => opts.MapFrom(y => y.Email))
+                .ForMember(dest => dest.Role, opts => opts.MapFrom(y => y.RoleId))
+                .ReverseMap();
+
+
+           // CreateMap<MailRoleDTO, MailRoleDTO>();
         }
 
         private RoleId ConvertRoleTypeToRoleId(RoleType roleType)

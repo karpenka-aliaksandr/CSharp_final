@@ -52,7 +52,7 @@ namespace UserApp.Migrations
                 values: new object[,]
                 {
                     { 0, "Admin" },
-                    { 1, "User" }
+                    { 1, "MailRoleDTO" }
                 });
 
             migrationBuilder.CreateIndex(
