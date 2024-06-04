@@ -9,6 +9,7 @@ networks:
 volumes:
   pgadmin:
   user:
+  message:
 
 
 services:
@@ -34,6 +35,30 @@ services:
     environment:
       POSTGRES_PASSWORD: "admin1234"
       POSTGRES_DB: "UserDB"
+      POSTGRES_USER: "admin"
+  
+  postgresmessage:
+    container_name: postgres_message_container
+    image: postgres
+    restart: always
+    # set shared memory limit when using docker-compose
+    shm_size: 128mb
+    volumes:
+      - ./data/message:/var/lib/postgresql/data
+    ports:
+      - "5433:5432"
+    networks:
+      - postgres
+  
+    # or set shared memory limit when deploy via swarm stack
+    #volumes:
+    #  - type: tmpfs
+    #    target: /dev/shm
+    #    tmpfs:
+    #      size: 134217728 # 128*2^20 bytes = 128Mb
+    environment:
+      POSTGRES_PASSWORD: "admin1234"
+      POSTGRES_DB: "MessageDB"
       POSTGRES_USER: "admin"
 
   
